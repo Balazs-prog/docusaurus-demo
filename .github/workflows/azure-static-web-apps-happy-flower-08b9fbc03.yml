@@ -22,6 +22,12 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Configure auth.json
+        run: |
+          # Replace the placeholders with values from GitHub Secrets.
+          sed -i 's@AAD_CLIENT_ID@${{ secrets.CLIENT_ID }}@g' staticwebapp.config.json
+          sed -i 's@AAD_CLIENT_SECRET@${{ secrets.CLIENT_SECRET }}@g'staticwebapp.config.json
+          cat staticwebapp.config.json
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
